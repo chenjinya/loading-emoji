@@ -13,5 +13,6 @@ func TestNewLoading(t *testing.T) {
 	println("loading 1s")
 	time.Sleep(1 * time.Second)
 	l.Stop()
+	println("loading done")
 	time.Sleep(2 * time.Second)
 }

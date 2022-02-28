@@ -45,6 +45,7 @@ func (l *LoadingEmoji) Loading(msg string) {
 
 func (l *LoadingEmoji) Stop() {
 	l.signal <- "stop"
+	time.Sleep(200 * time.Millisecond)
 }
 
 func (l *LoadingEmoji) loading() {
