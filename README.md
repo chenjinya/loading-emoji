@@ -16,7 +16,7 @@ import (
 
 func main() {
     countdown := 60
-    lo := loji.NewLoading("loading")
+    lo := loji.New()
     for true {
         lo.Loading(fmt.Sprintf("冷却: %d", countdown))
         countdown--
