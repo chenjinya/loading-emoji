@@ -6,7 +6,7 @@ import (
 )
 
 func TestNewLoading(t *testing.T) {
-	l := NewLoading("")
+	l := New()
 	l.Loading("loading...")
 	l.Loading("loading...2")
 	l.Loading("loading...33")
