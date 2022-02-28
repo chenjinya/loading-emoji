@@ -52,7 +52,7 @@ func (l *LoadingEmoji) loading() {
 	index := 0
 	go func() {
 		for true {
-			fmt.Printf("\r %s%s", string(l.clocks[index]), l.loadingText)
+			fmt.Printf("\r%s%s", string(l.clocks[index]), l.loadingText)
 			index++
 			if index >= len(l.clocks) {
 				index = 0
