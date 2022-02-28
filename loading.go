@@ -2,15 +2,15 @@ package loji
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
 type LoadingEmoji struct {
-	clocks []rune
-	index  int
-	status string
-	signal chan string
-	text   string
+	clocks  []rune
+	signal  chan string
+	isStart bool
+	mx      sync.Mutex
 }
 
 func NewLoading(clocks string) *LoadingEmoji {
@@ -18,12 +18,18 @@ func NewLoading(clocks string) *LoadingEmoji {
 		clocks = "🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛"
 	}
 	return &LoadingEmoji{
-		clocks: []rune(clocks),
-		signal: make(chan string),
+		clocks:  []rune(clocks),
+		signal:  make(chan string),
+		isStart: false,
 	}
 }
 
 func (l *LoadingEmoji) Loading(msg string) {
+	if l.isStart == true {
+		return
+	}
+	l.mx.Lock()
+	l.isStart = true
 	go func() {
 		l.loading(msg)
 	}()
@@ -35,7 +41,6 @@ func (l *LoadingEmoji) Stop() {
 
 func (l *LoadingEmoji) loading(msg string) {
 	index := 0
-	isStop := false
 	go func() {
 		for true {
 			fmt.Printf("\r %s%s", string(l.clocks[index]), msg)
@@ -44,8 +49,9 @@ func (l *LoadingEmoji) loading(msg string) {
 				index = 0
 			}
 			time.Sleep(100 * time.Millisecond)
-			if isStop {
+			if l.isStart == false {
 				fmt.Println("")
+				l.mx.Unlock()
 				break
 			}
 		}
@@ -53,7 +59,7 @@ func (l *LoadingEmoji) loading(msg string) {
 
 	select {
 	case _ = <-l.signal:
-		isStop = true
+		l.isStart = false
 	}
 
 }
