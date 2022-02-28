@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	l := loji.NewLoading("")
+	l := loji.New()
 	l.Loading("loading...")
 	time.Sleep(2 * time.Second)
 	l.Stop()
