@@ -14,13 +14,15 @@ type LoadingEmoji struct {
 	mx          sync.Mutex
 }
 
+const DefaultClocks = "🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛"
+
 func New() *LoadingEmoji {
-	return NewLoading("🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛")
+	return NewLoading("")
 }
 
 func NewLoading(clocks string) *LoadingEmoji {
 	if clocks == "" {
-		clocks = "🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛"
+		clocks = DefaultClocks
 	}
 	return &LoadingEmoji{
 		clocks:  []rune(clocks),
