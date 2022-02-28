@@ -1,4 +1,4 @@
-package loading
+package loji
 
 import (
 	"fmt"

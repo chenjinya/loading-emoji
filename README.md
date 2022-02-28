@@ -1,4 +1,4 @@
-# loading-emoji
+# Loji (loading-emoji)
 A loading emoji plugin for golang
 
 
@@ -10,7 +10,7 @@ package loading
 import (
 	"time"
 	
-	loji "github.com/chenjinya/loading-emoji"
+	"github.com/chenjinya/loji"
 )
 
 func main() {
