@@ -1,6 +1,7 @@
 # Loji (loading-emoji)
 A loading emoji plugin for golang
 
+![pic](./animate.gif)
 
 ## Usage
 
