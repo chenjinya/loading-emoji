@@ -13,6 +13,7 @@ type LoadingEmoji struct {
 	loadingText string
 	tickFunc func()
 	countDownIndex int
+	sleepDuration time.Duration // ms
 	mx          sync.Mutex
 }
 
@@ -30,6 +31,7 @@ func NewLoading(clocks string) *LoadingEmoji {
 		clocks:  []rune(clocks),
 		signal:  make(chan string),
 		isStart: false,
+		sleepDuration: 100 * time.Millisecond,
 	}
 }
 
@@ -61,6 +63,10 @@ func (l *LoadingEmoji) CountDownIndex() int {
 	return l.countDownIndex
 }
 
+func (l *LoadingEmoji) SleepDuration() time.Duration {
+	return l.sleepDuration
+}
+
 func (l *LoadingEmoji) loading() {
 	index := 0
 	l.countDownIndex = 0
@@ -75,7 +81,7 @@ func (l *LoadingEmoji) loading() {
 				index = 0
 			}
 			l.countDownIndex ++
-			time.Sleep(100 * time.Millisecond)
+			time.Sleep(l.sleepDuration)
 			if l.isStart == false {
 				fmt.Println("")
 				l.mx.Unlock()
