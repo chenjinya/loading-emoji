@@ -11,6 +11,8 @@ type LoadingEmoji struct {
 	signal      chan string
 	isStart     bool
 	loadingText string
+	tickFunc func()
+	countDownIndex int
 	mx          sync.Mutex
 }
 
@@ -51,15 +53,27 @@ func (l *LoadingEmoji) Stop() {
 	time.Sleep(200 * time.Millisecond)
 }
 
+func (l *LoadingEmoji) NextTick(f func()) {
+	l.tickFunc = f
+}
+
+func (l *LoadingEmoji) CountDownIndex() int {
+	return l.countDownIndex
+}
+
 func (l *LoadingEmoji) loading() {
 	index := 0
 	go func() {
 		for true {
+			if l.tickFunc != nil {
+				l.tickFunc()
+			}
 			fmt.Printf("\r%s%s", string(l.clocks[index]), l.loadingText)
 			index++
 			if index >= len(l.clocks) {
 				index = 0
 			}
+			l.countDownIndex = index
 			time.Sleep(100 * time.Millisecond)
 			if l.isStart == false {
 				fmt.Println("")
