@@ -12,10 +12,10 @@ func TestNewLoading(t *testing.T) {
 	l.Loading("loading...2")
 	l.Loading("loading...33")
 	l.NextTick(func() {
-		l.Loading(fmt.Sprintf(" trigger when next ticket, index: %d", l.CountDownIndex()))
+		l.Loading(fmt.Sprintf(" trigger when next ticket, count down: %.2d", 10 - l.CountDownIndex() / 10))
 	})
 	println("loading 1s")
-	time.Sleep(1 * time.Second)
+	time.Sleep(10 * time.Second)
 	l.Stop()
 	println("loading done")
 	time.Sleep(2 * time.Second)

@@ -63,6 +63,7 @@ func (l *LoadingEmoji) CountDownIndex() int {
 
 func (l *LoadingEmoji) loading() {
 	index := 0
+	l.countDownIndex = 0
 	go func() {
 		for true {
 			if l.tickFunc != nil {
@@ -73,7 +74,7 @@ func (l *LoadingEmoji) loading() {
 			if index >= len(l.clocks) {
 				index = 0
 			}
-			l.countDownIndex = index
+			l.countDownIndex ++
 			time.Sleep(100 * time.Millisecond)
 			if l.isStart == false {
 				fmt.Println("")
