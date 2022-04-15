@@ -52,6 +52,7 @@ func (l *LoadingEmoji) Stop() {
 		return
 	}
 	l.signal <- "stop"
+	l.mx.Unlock()
 }
 
 func (l *LoadingEmoji) NextTick(f func()) {
@@ -82,8 +83,6 @@ func (l *LoadingEmoji) loading() {
 			l.countDownIndex ++
 			time.Sleep(l.sleepDuration)
 			if l.isStart == false {
-				fmt.Println("")
-				l.mx.Unlock()
 				break
 			}
 		}
