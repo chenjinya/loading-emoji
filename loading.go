@@ -52,7 +52,6 @@ func (l *LoadingEmoji) Stop() {
 		return
 	}
 	l.signal <- "stop"
-	time.Sleep(200 * time.Millisecond)
 }
 
 func (l *LoadingEmoji) NextTick(f func()) {
